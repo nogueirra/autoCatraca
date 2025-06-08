@@ -27,7 +27,7 @@ function atualizarSaldo2(){
     elemento = document.querySelector('#currentBalance')
     saldo = localStorage.getItem('saldo_fump') | 0
 
-    saldo = saldo.toFixed(2).toString()
+    saldo = parseFloat(saldo).toFixed(2).toString()
     saldo = saldo.replace('.',',')
     
     elemento.innerText = `R$ ${saldo}`
