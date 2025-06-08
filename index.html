@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Recarga RU - UFMG</title>
+    <!-- Inclui o Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./script.js"></script>
+    <style>
+        /* Define a fonte Inter para todo o corpo */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f0f0; /* Um fundo claro para contraste */
+        }
+        /* Cores personalizadas do Tailwind CSS */
+        .bg-primary {
+            background-color: #076d69; /* Verde escuro */
+        }
+        .text-primary {
+            color: #076d69;
+        }
+        .bg-secondary {
+            background-color: #17a9a8; /* Verde claro/ciano */
+        }
+        .text-secondary {
+            color: #17a9a8;
+        }
+    </style>
+</head>
+<body onload="atualizarSaldo2()" class="flex flex-col min-h-screen">
+    <!-- Cabeçalho -->
+    <header class="bg-primary text-white py-4 shadow-md rounded-b-lg">
+        <div class="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between">
+            <!-- Placeholder para o logo da UFMG (substitua pela imagem real) -->
+            <div class="mb-4 sm:mb-0">
+                <img src="https://placehold.co/100x100/ffffff/076d69?text=LOGO+UFMG" alt="Logo UFMG" class="h-24 w-24 rounded-full shadow-lg">
+            </div>
+            <h1 class="text-3xl sm:text-4xl font-bold text-center sm:text-left mb-4 sm:mb-0">Sistema de Recarga RU</h1>
+            <!-- Placeholder para outro logo da UFMG (opcional, pode ser o mesmo) -->
+            <div class="hidden sm:block">
+                <img src="https://placehold.co/100x100/ffffff/076d69?text=LOGO+UFMG" alt="Logo UFMG" class="h-24 w-24 rounded-full shadow-lg">
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <section class="bg-white p-8 rounded-lg shadow-lg mb-8 border-l-4 border-secondary">
+            <h2 class="text-2xl font-semibold mb-4 text-primary">Bem-vindo(a) ao Sistema de Recarga do Restaurante Universitário da UFMG!</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Este sistema foi desenvolvido para facilitar a recarga do seu cartão de acesso às refeições do Restaurante Universitário da Universidade Federal de Minas Gerais.
+                Aqui você poderá gerenciar suas recargas de forma rápida e segura.
+            </p>
+            <p class="text-gray-700 leading-relaxed">
+                Nosso objetivo é proporcionar um ambiente justo e acessível para todos.
+                Escolha o número de refeições que deseja recarregar e prossiga com o pagamento via cartão.
+            </p>
+        </section>
+
+        <section class="bg-white p-8 rounded-lg shadow-lg border-l-4 border-secondary">
+            <h2 class="text-2xl font-semibold mb-6 text-primary">Detalhes da Recarga</h2>
+
+            <!-- Saldo Atual -->
+            <div class="mb-6 p-4 bg-green-50 border border-green-200 text-green-800 rounded-lg">
+                <p class="font-medium">Saldo Atual no Cartão:</p>
+                <p class="text-xl font-bold mt-1" id="currentBalance">R$ 20,00</p>
+            </div>
+
+            <!-- Nome do Aluno -->
+            <div class="mb-4 flex flex-col sm:flex-row items-center sm:items-baseline">
+                <label class="block text-gray-700 text-lg font-medium sm:mr-2 mb-2 sm:mb-0">
+                    Aluno(a):
+                </label>
+                <span id="studentName" class="text-xl font-bold text-primary">
+                    Davi Nogueira
+                </span>
+            </div>
+
+            <!-- Número de Matrícula -->
+            <div class="mb-6 flex flex-col sm:flex-row items-center sm:items-baseline">
+                <label class="block text-gray-700 text-lg font-medium sm:mr-2 mb-2 sm:mb-0">
+                    Nº de Matrícula:
+                </label>
+                <span id="registrationNumber" class="text-xl font-bold text-primary">
+                    2025XXXXXX
+                </span>
+            </div>
+
+            <!-- Posicionamento Socioeconômico -->
+            <div class="mb-6 flex flex-col sm:flex-row items-center sm:items-baseline">
+                <label class="block text-gray-700 text-lg font-medium sm:mr-2 mb-2 sm:mb-0">
+                    Posicionamento Socioeconômico:
+                </label>
+                <span id="socioeconomicText" class="text-xl font-bold text-primary">
+                    Não Posicionado
+                </span>
+            </div>
+
+            <!-- Seleção de Quantidade de Refeições -->
+            <div class="mb-6">
+                <label for="numMeals" class="block text-gray-700 text-lg font-medium mb-2">
+                    Número de Refeições:
+                </label>
+                <select id="numMeals" name="numMeals"
+                        class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-primary focus:border-primary sm:text-base cursor-pointer bg-gray-50 hover:bg-gray-100 transition duration-300 ease-in-out">
+                    <option value="1">1 Refeição (R$ 5,60)</option>
+                    <option value="2">2 Refeições (R$ 11,20)</option>
+                    <option value="3">3 Refeições (R$ 16,80)</option>
+                    <option value="5">5 Refeições (R$ 28,00)</option>
+                    <option value="10">10 Refeições (R$ 56,00)</option>
+                </select>
+            </div>
+
+            <!-- Valor Total da Recarga -->
+            <div class="mb-6 p-4 bg-blue-50 border border-blue-200 text-blue-800 rounded-lg">
+                <p class="font-medium">Valor Total da Recarga:</p>
+                <p class="text-xl font-bold mt-1" id="rechargeAmount">R$ 5,60</p>
+            </div>
+
+            <!-- Botão para Recarregar Cartão -->
+            <button id="rechargeCardBtn"
+                    class="w-full bg-primary text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-secondary transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                Recarregar Cartão
+            </button>
+        </section>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bg-primary text-white py-4 mt-8 rounded-t-lg shadow-inner">
+        <div class="container mx-auto px-4 text-center text-sm">
+            &copy; 2025 Restaurante Universitário UFMG. Todos os direitos reservados.
+        </div>
+    </footer>
+
+    <script>
+        const MEAL_PRICE = 5.60; // Preço de uma refeição
+
+        // Obtém referências para os elementos DOM
+        const numMealsSelect = document.getElementById('numMeals');
+        const rechargeAmountSpan = document.getElementById('rechargeAmount');
+        const rechargeCardBtn = document.getElementById('rechargeCardBtn');
+
+        // Função para atualizar o valor da recarga
+        function updateRechargeAmount() {
+            const selectedMeals = parseInt(numMealsSelect.value);
+            const totalAmount = selectedMeals * MEAL_PRICE;
+            rechargeAmountSpan.textContent = `R$ ${totalAmount.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Define o valor inicial ao carregar a página
+        updateRechargeAmount();
+
+        // Adiciona um ouvinte de evento para a mudança na seleção de refeições
+        numMealsSelect.addEventListener('change', updateRechargeAmount);
+
+        // Adiciona um ouvinte de evento para o botão Recarregar Cartão
+        rechargeCardBtn.addEventListener('click', () => {
+            const selectedMeals = parseInt(numMealsSelect.value);
+            const totalAmount = (selectedMeals * MEAL_PRICE).toFixed(2).replace('.', ',');
+
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center p-4 z-50';
+            modal.innerHTML = `
+                <div class="bg-white p-8 rounded-lg shadow-xl max-w-sm w-full text-center border-t-4 border-secondary">
+                    <h3 class="text-2xl font-semibold text-primary mb-4">Recarga do Cartão</h3>
+                    <p class="text-gray-700 mb-6">Você está recarregando <strong class="text-lg">${selectedMeals}</strong> refeição(ões) no valor total de <strong class="text-lg">R$ ${totalAmount}</strong>.</p>
+                    <p class="text-gray-600 text-sm mb-6">Prossiga para a tela de pagamento com cartão para finalizar a transação.</p>
+                    <button id="closeModalBtn" class="bg-primary text-white font-bold py-2 px-5 rounded-lg hover:bg-secondary transition duration-300 ease-in-out">
+                        Continuar para Pagamento
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(modal);
+
+            document.getElementById('closeModalBtn').addEventListener('click', () => {
+                modal.remove();
+                quandoConfirmado()
+                // Em um sistema real, aqui você redirecionaria para uma página de pagamento de cartão
+                // window.location.href = '/checkout-cartao';
+            });
+        });
+    </script>
+</body>
+</html>
