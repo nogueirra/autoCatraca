@@ -13,7 +13,7 @@ function atualizarValor(){
     
     const urlParams = new URLSearchParams(window.location.search);
     valor = urlParams.get('pay')
-    valor = parseFloat(valor).toFixed(2).toString()
+    valor = parseFloat(valor).toFixed(2)
     valor = valor.replace('.',',')
 
     i = 0
@@ -25,9 +25,14 @@ function atualizarValor(){
 
 function atualizarSaldo2(){
     elemento = document.querySelector('#currentBalance')
-    saldo = localStorage.getItem('saldo_fump') | 0
+    
+    if(!localStorage.key('saldo_fump')){
+        localStorage.setItem('saldo_fump',0)
+    }
 
-    saldo = parseFloat(saldo).toFixed(2).toString()
+    saldo = localStorage.getItem('saldo_fump')
+
+    saldo = parseFloat(saldo).toFixed(2)
     saldo = saldo.replace('.',',')
     
     elemento.innerText = `R$ ${saldo}`
