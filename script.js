@@ -25,7 +25,7 @@ function atualizarValor(){
 
 function atualizarSaldo2(){
     elemento = document.querySelector('#currentBalance')
-    
+
     if(!localStorage.key('saldo_fump')){
         localStorage.setItem('saldo_fump',0)
     }
@@ -42,8 +42,13 @@ function atualizarSaldo(){
     const urlParams = new URLSearchParams(window.location.search);
     recarga = urlParams.get('pay')
     recarga = parseFloat(recarga)
+
+    if(!localStorage.key('saldo_fump')){
+        localStorage.setItem('saldo_fump',0)
+        return
+    }
     
-    valor = localStorage.getItem('saldo_fump') | 0
+    valor = localStorage.getItem('saldo_fump')
 
     novoSaldo = parseFloat(recarga + valor).toFixed(2)
     localStorage.setItem("saldo_fump", novoSaldo);
