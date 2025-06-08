@@ -44,13 +44,14 @@ function atualizarSaldo(){
     recarga = parseFloat(recarga)
 
     if(!localStorage.key('saldo_fump')){
-        localStorage.setItem('saldo_fump',0)
+        localStorage.setItem('saldo_fump', parseFloat('0'))
         return
     }
     
     valor = localStorage.getItem('saldo_fump')
+    valor = parseFloat(valor)
 
-    novoSaldo = parseFloat(recarga + valor).toFixed(2)
+    novoSaldo = (recarga + valor).toFixed(2)
     localStorage.setItem("saldo_fump", novoSaldo);
 }
 
